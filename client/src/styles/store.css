@@ -1,0 +1,104 @@
+/* Customer site: layout and nav, service browsing, order form, order page, guide. */
+
+/* ---- layout & nav ---- */
+.wrap { max-width:1280px; margin:0 auto; padding:16px; }
+nav.topbar { display:flex; justify-content:space-between; align-items:center; gap:12px; padding:10px 16px; margin:8px 0 16px; border-radius:16px; }
+.brand { font-weight:800; font-size:1.25em; text-decoration:none; color:var(--text);
+  background:linear-gradient(135deg,var(--link),var(--accent)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+.navlinks { display:flex; gap:6px; }
+.navlinks a { color:var(--muted); text-decoration:none; padding:7px 14px; border-radius:10px; font-weight:600; }
+.navlinks a:hover { color:var(--text); background:var(--glass-strong); }
+.navlinks a.active { color:var(--text); background:var(--glass-strong); border:1px solid var(--border); }
+
+/* Phones: nav becomes an app-style tab bar pinned to the bottom of the screen. */
+@media (max-width:640px) {
+  /* A blur (backdrop-filter) on the top bar would trap the fixed tab bar inside it,
+     so on phones the top bar gets a solid tint instead. */
+  nav.topbar { justify-content:center; backdrop-filter:none; -webkit-backdrop-filter:none; background:var(--glass-strong); }
+  .navlinks {
+    position:fixed; z-index:40; left:10px; right:10px; bottom:calc(10px + env(safe-area-inset-bottom));
+    display:grid; grid-template-columns:repeat(3,1fr); gap:4px; padding:6px;
+    border-radius:20px; border:1px solid var(--border); box-shadow:var(--shadow);
+    background:var(--glass-strong); backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur);
+  }
+  .navlinks a { display:flex; align-items:center; justify-content:center; padding:12px 4px;
+    font-size:.85em; border:1px solid transparent; border-radius:14px; text-align:center; }
+  .navlinks a.active { color:#fff; background:var(--gradient); border-color:transparent; }
+  .wrap { padding-bottom:calc(96px + env(safe-area-inset-bottom)); } /* keep content clear of the bar */
+}
+
+/* ---- browsing services ---- */
+.hero { text-align:center; padding:18px 0 6px; }
+.hero h2 { font-size:1.9em; margin:0; }
+.grid { display:flex; flex-wrap:wrap; justify-content:center; gap:14px; margin-top:14px; }
+.grid .plat { flex:0 0 170px; }
+.plat { display:flex; flex-direction:column; align-items:center; gap:8px; padding:20px 10px; color:var(--text);
+  background:var(--glass); border:1px solid var(--border); border-radius:18px; backdrop-filter:blur(16px);
+  box-shadow:var(--shadow); width:auto; transition:transform .2s, border-color .2s; }
+.plat:hover:not(:disabled) { transform:translateY(-4px) scale(1.02); border-color:var(--accent); filter:none; }
+.row > .platform-title { flex:1 1 auto; display:flex; align-items:center; gap:10px; }
+
+.svc { cursor:pointer; display:flex; justify-content:space-between; gap:14px; align-items:center; transition:transform .15s, border-color .15s; }
+/* service rows are real buttons/links (keyboard + screen reader friendly); undo the pink button look */
+button.svc, a.linkcard { width:100%; text-align:left; color:var(--text); font-weight:400; text-decoration:none;
+  background:var(--glass); border:1px solid var(--border); box-shadow:var(--shadow); padding:14px 16px; }
+.svc:hover, button.svc:hover:not(:disabled) { transform:translateX(3px); border-color:var(--accent); filter:none; }
+.price { font-weight:700; white-space:nowrap; text-align:right; }
+.price small { display:block; font-weight:400; color:var(--muted); }
+
+/* ---- order form ---- */
+.desc { margin:12px 0; padding:10px 14px; border-radius:14px; background:var(--glass-strong); border:1px solid var(--border); }
+.desc summary { cursor:pointer; font-weight:600; }
+.desc p { white-space:pre-line; margin:8px 0 0; font-size:.9em; color:var(--muted); max-height:260px; overflow:auto; }
+.total { display:flex; justify-content:space-between; align-items:baseline; padding:14px 16px; margin:14px 0;
+  border-radius:14px; background:var(--glass-strong); border:1px solid var(--border); }
+.total strong { font-size:1.6em; }
+
+/* ---- order page ---- */
+.codebox { display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+  padding:12px 14px; margin:10px 0; border-radius:14px; background:var(--glass-strong); border:1px dashed var(--accent); }
+.codebox .code { display:block; font-family:ui-monospace,Consolas,monospace; word-break:break-all; font-size:1.05em; }
+.facts { display:grid; grid-template-columns:max-content 1fr; gap:6px 16px; margin:12px 0; }
+.facts dt { color:var(--muted); font-size:.9em; }
+.facts dd { margin:0; }
+.progress { margin:12px 0; }
+.bar { height:8px; border-radius:99px; background:var(--glass-strong); border:1px solid var(--border); overflow:hidden; margin-top:6px; }
+.bar i { display:block; height:100%; background:linear-gradient(90deg,var(--accent-d),var(--accent)); transition:width .4s; }
+.paybox { margin-top:14px; padding-top:6px; border-top:1px solid var(--border); }
+.paysteps { padding-left:20px; }
+.paysteps li { margin:6px 0; }
+.paysteps button { margin-left:6px; vertical-align:middle; }
+.cancelbox { display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+  margin-top:16px; padding-top:12px; border-top:1px solid var(--border); }
+
+/* payment screenshot upload */
+.upload { display:flex; flex-direction:column; align-items:center; gap:6px; text-align:center; cursor:pointer;
+  padding:18px; margin:10px 0 14px; border-radius:14px; border:2px dashed var(--border); background:var(--glass); font-weight:400; }
+.upload:hover, .upload:focus-within { border-color:var(--accent); }
+.upload.has { border-style:solid; border-color:var(--ok); }
+.upload input { position:absolute; width:1px; height:1px; opacity:0; }
+.upload img { max-height:220px; max-width:100%; border-radius:10px; }
+
+/* ---- guide panel beside the order form / order page ---- */
+.withguide { display:grid; grid-template-columns:260px 1fr; gap:16px; align-items:start; }
+.withguide > .card { margin:12px 0; }
+.guide-side { position:sticky; top:16px; }
+.guide-side h3 { margin-top:0; }
+.gsteps { list-style:none; padding:0; margin:0 0 12px; display:flex; flex-direction:column; gap:8px; }
+.gsteps li { display:flex; gap:10px; align-items:center; color:var(--muted); }
+.gsteps .n { width:22px; height:22px; border-radius:50%; display:grid; place-items:center; font-size:12px; font-weight:700; border:1px solid var(--border); flex:0 0 auto; }
+.gsteps li.now { color:var(--text); font-weight:700; }
+.gsteps li.now .n { background:var(--gradient); color:#fff; border-color:transparent; }
+.gsteps li.done .n { background:color-mix(in srgb,var(--accent) 30%,transparent); }
+.guide-side .tips ul { margin:6px 0 12px; padding-left:18px; color:var(--muted); }
+.guide-side .tips.stop strong { color:var(--err); }
+@media (max-width:760px) {
+  .withguide { grid-template-columns:1fr; }
+  .guide-side { position:static; }
+}
+
+/* ---- how it works page ---- */
+.stepcard { padding:10px 14px; margin:8px 0; align-items:flex-start; gap:12px; }
+.row > .stepnum { flex:0 0 24px; width:24px; height:24px; border-radius:50%; display:grid; place-items:center;
+  font-size:12px; font-weight:700; color:#fff; background:var(--gradient); margin-top:2px; }
+.cta { margin:16px 0; }

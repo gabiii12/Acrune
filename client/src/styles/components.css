@@ -1,0 +1,46 @@
+/* Shared pieces used by both the store and the admin. */
+
+/* status badge */
+.badge { display:inline-block; padding:3px 10px; border-radius:99px; font-size:.78em; font-weight:600;
+  background:var(--glass-strong); border:1px solid var(--border); white-space:nowrap; }
+.badge.awaiting_payment { color:var(--muted); }
+.badge.payment_submitted, .badge.partial { color:var(--warn); }
+.badge.approving, .badge.processing { color:var(--link); }
+.badge.completed, .badge.refunded { color:var(--ok); }
+.badge.rejected, .badge.canceled, .badge.customer_canceled { color:var(--err); }
+
+/* small info tags */
+.tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:6px; }
+.tag { font-size:.78em; padding:2px 9px; border-radius:99px; background:var(--glass-strong); border:1px solid var(--border); color:var(--muted); }
+.tag.good { color:var(--ok); }
+.tag.info { color:var(--link); }
+
+/* pill buttons (filters, quantity presets, dialog presets) */
+.chips { display:flex; flex-wrap:wrap; gap:8px; margin:10px 0; }
+.chip-btn { padding:7px 14px; border-radius:99px; font-size:.9em; background:var(--glass); color:var(--text);
+  border:1px solid var(--border); box-shadow:none; }
+.chip-btn span { opacity:.7; font-weight:500; margin-left:2px; }
+.chip-btn.on { color:#fff; background:var(--gradient); border-color:transparent; }
+.chip { padding:6px 14px; border-radius:99px; background:var(--glass); border:1px solid var(--border); font-size:.9em; }
+
+/* platform logo tile */
+.logo { display:inline-flex; align-items:center; justify-content:center; border-radius:16px; color:#fff; font-size:1.4em;
+  flex:0 0 auto; box-shadow:0 6px 18px rgba(0,0,0,.3), inset 0 1px 0 rgba(255,255,255,.35); }
+.logo img { display:block; }
+
+/* modal + dialog (useDialog, screenshot viewer) */
+.modal { position:fixed; inset:0; z-index:50; display:grid; place-items:center; padding:16px; background:rgba(0,0,0,.6); }
+.modal-box { width:min(560px,100%); max-height:92vh; overflow:auto; padding:16px; display:flex; flex-direction:column; gap:10px;
+  background:var(--glass-strong); }
+.modal-box img { width:100%; border-radius:10px; background:#fff; }
+.dialog h3 { margin:0; }
+.dialog-message { white-space:pre-line; margin:0; }
+.dialog .chips { margin:0; }
+.dialog .chip-btn { font-size:.82em; padding:6px 12px; }
+.dialog-actions { display:flex; gap:8px; justify-content:flex-end; }
+@media (max-width:760px) {
+  /* bottom sheet on phones, above the tab bar */
+  .modal:has(.dialog) { place-items:end center; padding:0; }
+  .modal-box.dialog { width:100%; border-radius:20px 20px 0 0; padding:18px 16px calc(18px + env(safe-area-inset-bottom)); }
+  .dialog-actions button { flex:1 1 0; padding:13px; }
+}

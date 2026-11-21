@@ -1,0 +1,18 @@
+{
+  "name": "zsmm-server",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --env-file=.env --watch src/index.js",
+    "start": "node --env-file=.env src/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.4.0"
+  },
+  "description": "API for the SMM store: services, orders, GCash payments and the admin dashboard.",
+  "main": "src/index.js",
+  "engines": {
+    "node": ">=22.5"
+  }
+}

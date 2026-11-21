@@ -1,0 +1,33 @@
+/* Colors and page background. Dark by default, light when the device prefers it. */
+:root {
+  --bg1:#1a0b17; --bg2:#2e1027;
+  --glass:rgba(255,255,255,.08); --glass-strong:rgba(255,255,255,.14);
+  --border:rgba(255,255,255,.18); --text:#fff5fa; --muted:#e8c6d9;
+  --accent:#ff4d9d; --accent2:#ff9ac6; --accent-d:#d6247f; --link:#ff9ac6;
+  --ok:#4ade80; --warn:#fbbf24; --err:#fb7185;
+  --shadow:0 8px 32px rgba(0,0,0,.35);
+  --gradient:linear-gradient(135deg,var(--accent-d),var(--accent));
+  --blur:blur(24px) saturate(160%);
+}
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg1:#ffe4f1; --bg2:#fff0f8;
+    --glass:rgba(255,255,255,.55); --glass-strong:rgba(255,255,255,.8);
+    --border:rgba(255,255,255,.9); --text:#2a0c23; --muted:#6b3558;
+    --accent:#ec3d8f; --accent2:#ff7ab8; --accent-d:#b3146a; --link:#b3146a;
+    --ok:#15803d; --warn:#b45309; --err:#e11d48;
+    --shadow:0 8px 32px rgba(190,60,130,.18);
+  }
+}
+
+body {
+  margin:0; color:var(--text); min-height:100vh;
+  font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  background:linear-gradient(135deg,var(--bg1),var(--bg2)) fixed;
+}
+/* soft glowing blobs behind the glass */
+body::before, body::after {
+  content:""; position:fixed; z-index:-1; border-radius:50%; filter:blur(90px); opacity:.5; pointer-events:none;
+}
+body::before { width:520px; height:520px; background:var(--accent); top:-140px; left:-120px; }
+body::after  { width:480px; height:480px; background:var(--accent2); bottom:-140px; right:-100px; opacity:.35; }

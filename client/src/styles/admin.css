@@ -1,0 +1,81 @@
+/* Admin dashboard: sidebar layout, stats, tabs and tables (cards on phones). */
+
+.admin { display:grid; grid-template-columns:220px 1fr; gap:16px; max-width:1200px; margin:0 auto; padding:16px; min-height:100vh; }
+.admin main { min-width:0; } /* lets wide tables scroll instead of stretching the page */
+.login { max-width:380px; margin:12vh auto; padding:24px; }
+
+/* sidebar */
+.side { padding:16px 12px; position:sticky; top:16px; align-self:start; display:flex; flex-direction:column; gap:4px; }
+.side .brand { padding:4px 10px 12px; display:block; }
+.side-main, .side-tools { display:flex; flex-direction:column; gap:4px; }
+.side a { color:var(--muted); text-decoration:none; padding:10px 14px; border-radius:12px; font-weight:600; display:flex; gap:10px; align-items:center; }
+.side a:hover { background:var(--glass-strong); color:var(--text); }
+.side a.active { background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 35%,transparent),color-mix(in srgb,var(--accent2) 25%,transparent)); color:var(--text); border:1px solid var(--border); }
+.side .spacer { flex:1; min-height:20px; }
+.side .count { margin-left:auto; }
+
+/* overview */
+.balances { display:flex; gap:10px; flex-wrap:wrap; }
+.stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(180px,1fr)); gap:14px; margin:12px 0; }
+.stat { padding:16px; }
+.stat .v { font-size:1.8em; font-weight:800; line-height:1.2; }
+
+/* order filter tabs */
+.tabs { display:flex; gap:6px; flex-wrap:wrap; margin:8px 0; }
+.tab { padding:7px 14px; border-radius:99px; background:var(--glass); border:1px solid var(--border); color:var(--muted); box-shadow:none; font-size:.9em; }
+.tab.on { color:#fff; background:var(--gradient); border-color:transparent; }
+
+/* tables */
+.tablewrap { overflow-x:auto; padding:6px 10px; }
+table { width:100%; border-collapse:collapse; font-size:.9em; }
+th { text-align:left; color:var(--muted); font-weight:600; font-size:.8em; text-transform:uppercase; letter-spacing:.05em; }
+td, th { padding:10px 8px; border-bottom:1px solid var(--border); vertical-align:top; word-break:break-word; }
+tr:last-child td { border-bottom:0; }
+.actions { white-space:nowrap; }
+.actions button { margin:2px 0; }
+
+/* ---- phones ---- */
+@media (max-width:760px) {
+  .admin { grid-template-columns:1fr; gap:10px; padding:10px 10px calc(96px + env(safe-area-inset-bottom)); }
+
+  /* top bar: title + small tools. No blur here, or the fixed tab bar would get trapped inside it. */
+  .side { position:sticky; top:0; z-index:30; flex-direction:row; align-items:center; gap:6px; padding:8px 10px;
+    backdrop-filter:none; -webkit-backdrop-filter:none; background:var(--glass-strong); }
+  .side .brand { padding:0 4px; flex:1 1 auto; }
+  .side .spacer { display:none; }
+  .side-tools { flex-direction:row; gap:2px; }
+  .side-tools a { padding:7px 8px; font-size:.78em; white-space:nowrap; }
+
+  /* bottom tab bar for the main pages */
+  .side-main { position:fixed; z-index:40; left:10px; right:10px; bottom:calc(10px + env(safe-area-inset-bottom));
+    display:grid; grid-template-columns:repeat(3,1fr); gap:4px; padding:6px; border-radius:20px;
+    border:1px solid var(--border); box-shadow:var(--shadow); background:var(--glass-strong);
+    backdrop-filter:var(--blur); -webkit-backdrop-filter:var(--blur); }
+  .side-main a { justify-content:center; gap:6px; padding:11px 4px; font-size:.85em; border:1px solid transparent; position:relative; }
+  .side-main a.active { color:#fff; background:var(--gradient); border-color:transparent; }
+  .side-main .count { position:absolute; top:2px; right:6px; margin:0; padding:1px 7px; }
+
+  .stats { grid-template-columns:1fr 1fr; gap:8px; }
+  .stat { padding:12px; }
+  .stat .v { font-size:1.35em; }
+  .tabs { flex-wrap:nowrap; overflow-x:auto; padding-bottom:4px; scrollbar-width:none; }
+  .tabs .tab { flex:0 0 auto; }
+
+  /* tables become stacked cards with labels (from each cell's data-label) */
+  .tablewrap { padding:0; background:none; border:0; box-shadow:none; backdrop-filter:none; -webkit-backdrop-filter:none; overflow:visible; }
+  table.cards, table.cards tbody, table.cards tr, table.cards td { display:block; width:100%; }
+  table.cards thead { display:none; }
+  table.cards tr { margin:0 0 10px; padding:6px 12px; border-radius:16px; background:var(--glass);
+    border:1px solid var(--border); box-shadow:var(--shadow); }
+  table.cards td { display:grid; grid-template-columns:84px 1fr; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
+  table.cards td::before { content:attr(data-label); color:var(--muted); font-size:.78em; font-weight:600;
+    text-transform:uppercase; letter-spacing:.04em; padding-top:2px; }
+  table.cards td.full { display:block; }
+  table.cards td.full::before { display:none; }
+  table.cards td.actions { display:flex; flex-wrap:wrap; gap:8px; white-space:normal; border-bottom:0; }
+  table.cards td.actions::before, table.cards td.empty::before { display:none; }
+  table.cards td.actions:empty { display:none; }
+  table.cards td.actions button { flex:1 1 auto; padding:10px 14px; }
+  table.cards td.empty { display:block; text-align:center; }
+  table.cards tr td:last-of-type { border-bottom:0; }
+}
